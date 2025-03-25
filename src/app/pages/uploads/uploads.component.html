@@ -1,0 +1,27 @@
+
+<section class="pb-20">
+    <p class="m-3">Recent Uploads</p>
+    @if (items) {
+        @for (item of items; track $index) {
+            <div class="flex justify-between items-center border rounded-xl w-[90%] shadow m-auto p-5 mb-3">
+                <div class="flex  ">
+                    <div class="flex items-center"><i class="fa-solid fa-file text-3xl mx-5 text-green-600"></i></div>
+                    <div>
+                        <p>Prescription_123132.jpg</p>
+                        <p class="text-gray-500 text-sm">Recognized: 2 Medicines</p>
+                        <p class="text-gray-400 text-xs">2025-03-23 11:32:42</p>
+                    </div>
+                </div>
+                <div><i class="fa-solid fa-angle-right"></i></div>
+            </div>
+        }
+    } @else {
+        <div class="flex h-[50vh] justify-center items-center">
+            <p class="to-gray-500">No recent uploads yet</p>
+        </div>
+    }
+    
+
+    
+    
+</section>

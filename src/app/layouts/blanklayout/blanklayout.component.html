@@ -1,0 +1,25 @@
+<nav class="flex justify-between items-center bg-green-600 w-full py-5 font-medium mb-6">
+    <div class="flex items-center">
+        <div class="mx-5"><i class="fa-sold fa-bars text-3xl"></i></div>
+        <div>
+            <div class="text-3xl text-white">Welcome</div>
+            <div class="text-gray-300 font-thin">AI-Powered Prescription Analysis</div>
+        </div>
+    </div>
+    <div>
+        <i class="mx-3 text-white text-3xl fa-solid fa-gear" role="button" routerLink="/settings"></i>
+        <i class="mx-3 text-white text-3xl fa-solid fa-right-from-bracket" (click)="authService.logoutUser()"
+         role="button" routerLink="/register"></i>
+    </div>
+    
+</nav>
+  
+
+<router-outlet/>
+
+
+<div class="w-full rounded-t-2xl bg-green-600  flex justify-between px-[10%] py-3 fixed bottom-0">
+    <div class="text-center" role="button" routerLink="/home" routerLinkActive="text-white"><i class="fa fa-home"></i><p>Home</p></div>
+    <div class="text-center" role="button" routerLink="/uploads" routerLinkActive="text-white"><i class="fa-regular fa-rectangle-list"></i><p>Uploads</p></div>
+    <div class="text-center" role="button" routerLink="/settings" routerLinkActive="text-white"><i class="fa-solid fa-gear"></i><p>Settings</p></div>
+</div>
