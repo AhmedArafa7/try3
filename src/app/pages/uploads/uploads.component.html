@@ -1,9 +1,19 @@
 
 <section class="pb-20">
     <p class="m-3">Recent Uploads</p>
-    @if (items) {
-        @for (item of items; track $index) {
+    @if (images) {
+        @for (image of images; track $index) {
             <div class="flex justify-between items-center border rounded-xl w-[90%] shadow m-auto p-5 mb-3">
+                <div>
+                    <img [src]="image.src" [alt]="image.name" class="w-[120px] h-[120px] object-cover m-auto" />
+                    <div class="info">
+                        <p><strong>Name:</strong> {{ image.name }}</p>
+                        <p><strong>Size:</strong> {{ image.size  }} bytes</p>
+                        <p><strong>Type:</strong> {{ image.type }}</p>
+                        <p><strong>Last Modified:</strong> {{ image.lastModified  }}</p>
+                    </div>
+                    <p (click)="removePrescription(image.name)" role="button" class="text-red-700 pb-3">delete prescription</p>
+                </div>
                 <div class="flex  ">
                     <div class="flex items-center"><i class="fa-solid fa-file text-3xl mx-5 text-green-600"></i></div>
                     <div>

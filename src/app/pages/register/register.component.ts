@@ -20,7 +20,7 @@ export class RegisterComponent {
   register: FormGroup = new FormGroup({
     name: new FormControl(null , [Validators.required ,Validators.minLength(3), Validators.maxLength(20)]),
     email: new FormControl(null , [Validators.required , Validators.email]),
-    password: new FormControl(null , [Validators.required ,Validators.minLength(3), Validators.maxLength(20), Validators.pattern(/^[A-Z]\w{7,}$/)]),
+    password: new FormControl(null , [Validators.required ,Validators.minLength(7), Validators.maxLength(20), Validators.pattern(/^[A-Z] $/)]),//password must contain at least one uppercase letter, one lowercase letter, one number, and one special character
     rePassword: new FormControl(null , [Validators.required ]),
   }, { validators: this.rePassword });
 

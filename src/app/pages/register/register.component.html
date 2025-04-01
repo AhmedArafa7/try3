@@ -1,10 +1,10 @@
-<h1 class="text-3xl text-center text-white bg-green-600 w-full font-semibold p-4 shadow-md rounded-t-xl">
-  Sign Up
+<h1 class="text-3xl text-center text-white bg-green-600 w-full font-semibold p-4 shadow-md">
+  Register
 </h1>
 
-<section class="w-full max-w-lg mx-auto mt-6 p-6 bg-white rounded-xl shadow-lg">
+<section class="w-full max-w-lg mx-auto mt-6 p-6 bg-white border rounded-xl shadow-lg">
   <p class="text-2xl font-semibold text-gray-900 text-center">Create Your Account</p>
-  <p class="text-gray-500 text-center mb-6">Sign up to Security</p>
+  <p class="text-gray-500 text-center mb-6">Sign up to security upload prescriptions and receive AI</p>
 
   <form [formGroup]="register" (ngSubmit)="submitForm()" class="space-y-4">
     <!-- Name Field -->
@@ -92,11 +92,14 @@
                           <li>password is requierd</li>
                       }
                         @if (register.get('password')?.getError('minlength')) {
-                            <li>password is minLength: 3</li>
+                            <li>password is minLength: 7</li>
                         }
                         @if (register.get('password')?.getError('maxlength')) {
                             <li>password is maxLength: 20</li>
                         }
+                        @if (register.get('password')?.getError('pattern')) {
+                            <li>password must contain at least one uppercase letter, one lowercase letter, one number, and one special character</li>
+                      }
                   </ul>
                 </div>
               </div>
@@ -120,7 +123,7 @@
                 <span class="sr-only">Danger</span>
                 <div>
                     <ul class="mt-1.5 list-disc list-inside">
-                      @if (register.get('repassword')?.getError('mismatch') && register.get('repassword')?.touched) {
+                      @if (register.get('rePassword')?.getError('required')) {
                           <li>password confirmpassword is not correct</li>
                       }
                   </ul>

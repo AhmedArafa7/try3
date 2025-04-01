@@ -5,7 +5,7 @@ import { BlanklayoutComponent } from './layouts/blanklayout/blanklayout.componen
 import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'home', pathMatch: 'full' },
+    { path: '', redirectTo: 'login', pathMatch: 'full' },
     { 
         path: '', 
         component: AuthlayoutComponent, 
@@ -17,11 +17,12 @@ export const routes: Routes = [
     },
     {
         path: '', 
-        component: BlanklayoutComponent , canActivate: [authGuard],
+        component: BlanklayoutComponent,
         children: [
-            { path: 'home', loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent), title: 'Home'  },
+            { path: 'home', loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent) },
             { path: 'uploads', loadComponent: () => import('./pages/uploads/uploads.component').then(m => m.UploadsComponent) },
-            { path: 'settings', loadComponent: () => import('./pages/settings/settings.component').then(m => m.SettingsComponent) },]},
+            { path: 'settings', loadComponent: () => import('./pages/settings/settings.component').then(m => m.SettingsComponent) },
+        ]},
     { path: '**', component: NotfoundComponent }
 ];
 

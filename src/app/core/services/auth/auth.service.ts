@@ -24,9 +24,10 @@ export class AuthService {
     return this.httpClient.post(`${environment.baseUrl}/api/v1/auth/signin`, data);
   }
 
-  getUserData():void {
+  getUserData() {
     this.userData = jwtDecode(localStorage.getItem('token')!);
     console.log(this.userData);
+    return this.userData;
   }
 
   logoutUser():void {

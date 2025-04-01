@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth/auth.service';
@@ -19,7 +19,7 @@ export class LoginComponent {
   
     loginForm: FormGroup = new FormGroup({
       email: new FormControl(null , [Validators.required , Validators.email]),
-      password: new FormControl(null , [Validators.required , Validators.pattern(/^[A-Z]\w{7,}$/)]),
+      password: new FormControl(null , [Validators.required ]),
     });
   
     submitForm():void {
@@ -31,6 +31,7 @@ export class LoginComponent {
             if (res.message === 'success') {
               this.isLoading = false;
               localStorage.setItem('token', res.token);
+              console.log(this.authService.getUserData());
               this.authService.getUserData();
               this.router.navigate(['/home']);
             }
