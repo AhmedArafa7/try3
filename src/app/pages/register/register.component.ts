@@ -1,56 +1,55 @@
-import { Component, inject } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../core/services/auth/auth.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Router, RouterLink } from '@angular/router';
+import { AuthService } from './../../core/services/auth/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
-  imports: [ ReactiveFormsModule, RouterLink],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  standalone: true,
+  imports: [ReactiveFormsModule], // تأكد من استيرادها
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
+  signupForm!: FormGroup;
 
-  private readonly authService = inject(AuthService);
-  private readonly router = inject(Router)
-  isLoading: boolean = false;
-  msgError: string = '';
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private toastr: ToastrService,
+    private router: Router
+  ) {}
 
-  register: FormGroup = new FormGroup({
-    name: new FormControl(null , [Validators.required ,Validators.minLength(3), Validators.maxLength(20)]),
-    email: new FormControl(null , [Validators.required , Validators.email]),
-    password: new FormControl(null , [Validators.required ,Validators.minLength(7), Validators.maxLength(20), Validators.pattern(/^[A-Z] $/)]),//password must contain at least one uppercase letter, one lowercase letter, one number, and one special character
-    rePassword: new FormControl(null , [Validators.required ]),
-  }, { validators: this.rePassword });
-
-  submitForm():void {
-    if(this.register.valid) {
-      this.isLoading = true;
-      this.authService.sendRegegisterForm(this.register.value).subscribe({
-        next: (res) => {
-          console.log(res)
-          if (res.message === 'success') {
-            this.isLoading = false;
-            this.router.navigate(['/home']);
-          }
-        },
-        error: (err:HttpErrorResponse) => {
-          console.log(err)
-          this.msgError = err.error.message;
-          this.isLoading = false;
-        }
-      }
-      
-      );
-    }else {
-      this.register.markAllAsTouched();
-    }
+  ngOnInit(): void {
+    this.signupForm = this.fb.group({
+      fullName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', Validators.required]
+    });
   }
 
-  rePassword(group: AbstractControl) {
-    const password = group.get('password')?.value;
-    const rePassword = group.get('rePassword')?.value;
-    return password === rePassword ? null : { notSame: true };
+  onSubmit(): void {
+    if (this.signupForm.invalid) return;
+
+    const { fullName, email, password, confirmPassword } = this.signupForm.value;
+
+    if (password !== confirmPassword) {
+      this.toastr.error('Passwords do not match');
+      return;
+    }
+
+    const user = { fullName, email, password };
+
+    this.authService.sendRegegisterForm(user).subscribe({
+      next: (response) => {
+        this.authService.setToken(response.token);
+        this.toastr.success('Registration successful');
+        this.router.navigate(['/home']);
+      },
+      error: (err) => {
+        this.toastr.error(err.error.message || 'Registration failed');
+      }
+    });
   }
 }

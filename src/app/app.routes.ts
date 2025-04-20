@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { AuthlayoutComponent } from './layouts/authlayout/authlayout.component';
 import { BlanklayoutComponent } from './layouts/blanklayout/blanklayout.component';
-import { authGuard } from './core/guards/auth.guard';
+//import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },

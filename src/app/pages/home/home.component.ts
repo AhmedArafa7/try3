@@ -1,74 +1,39 @@
-import { Component, inject } from '@angular/core';
-import { IprescInfo } from '../../shared/interfaces/Ipresc';
-import { AuthService } from '../../core/services/auth/auth.service';
-import { ImagesService } from '../../core/services/images/images.service';
+import { PrescriptionService } from './../../core/services/prescription/prescription.service';
+import { AuthService } from './../../core/services/auth/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [],
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  templateUrl: './home.component.html'
 })
-export class HomeComponent {
-  private readonly authService = inject(AuthService);
-  private readonly imagesService = inject(ImagesService);
-  images: IprescInfo[] = [] as IprescInfo[];
-  show: boolean = false;
-  userName: string = this.authService.getUserData().name;
+export class HomeComponent implements OnInit {
+  user: any;
+
+  constructor(
+    private authService: AuthService,
+    private prescriptionService: PrescriptionService,
+    private toastr: ToastrService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.getPrescriptionsData();
+    this.user = this.authService.getUserData();
   }
 
-  getPrescriptionsData():void {
-    this.imagesService.getAllPriscriptions().subscribe({
-      next:(res)=>{
-        console.log('test');
-        console.log(res.data);
-        this.images = res.data;
-      },
-      error:(err)=>{
-        console.log(err);
-      }
-    });}
-  
-
-  constructor() {
-    console.log(this.authService.userData);
-    console.log(this.authService.userData?.email);
-    console.log('userData', this.authService.userData);
-    console.log('test',this.authService.getUserData().name);
-    this.authService.getUserData();
-  }
-  onFilesSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-
-    if (input.files && input.files.length > 0) {
-      for (let i = 0; i < input.files.length; i++) {
-        const file = input.files[i];
-        const reader = new FileReader();
-        reader.onload = (e: ProgressEvent<FileReader>) => {
-          this.imagesService.uploadImage(e.target?.result as string)
-          this.images.push({
-            file: file,
-            src: e.target?.result as string,
-            name: file.name,
-            size: file.size,
-            type: file.type,
-            lastModified: new Date(file.lastModified)
-          });
-        };
-        reader.readAsDataURL(file);
-        this.show = true;
-      }
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.prescriptionService.uploadPrescription(file).subscribe({
+        next: () => {
+          this.toastr.success('Prescription uploaded successfully');
+          this.router.navigate(['/uploads']);
+        },
+        error: (err) => {
+          this.toastr.error(err.error.message || 'Upload failed');
+        }
+      });
     }
   }
-
-  hide() {
-    this.show = false;
-  }
-
-
-
-
 }

@@ -7,3 +7,11 @@
 .btn-main {
     @apply disabled:bg-gray-900 bg-green-600 text-white border rounded px-12 py-2 hover:bg-green-800 hover:shadow-xl transition-colors duration-500
 }
+
+.toast-success {
+  @apply bg-green-500 text-white;
+}
+
+.toast-error {
+  @apply bg-red-500 text-white;
+}

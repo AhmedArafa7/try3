@@ -1,51 +1,47 @@
-import { Component, inject } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../core/services/auth/auth.service';
+import { AuthService } from './../../core/services/auth/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, RouterLink ] ,
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+  loginForm!: FormGroup;
 
-   private readonly authService = inject(AuthService);
-    private readonly router = inject(Router)
-    isLoading: boolean = false;
-    msgError: string = '';
-  
-    loginForm: FormGroup = new FormGroup({
-      email: new FormControl(null , [Validators.required , Validators.email]),
-      password: new FormControl(null , [Validators.required ]),
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private toastr: ToastrService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
     });
-  
-    submitForm():void {
-      if(this.loginForm.valid) { 
-        this.isLoading = true;
-        this.authService.sendLoginForm(this.loginForm.value).subscribe({
-          next: (res) => {
-            console.log(res)
-            if (res.message === 'success') {
-              this.isLoading = false;
-              localStorage.setItem('token', res.token);
-              console.log(this.authService.getUserData());
-              this.authService.getUserData();
-              this.router.navigate(['/home']);
-            }
-          },
-          error: (err:HttpErrorResponse) => {
-            console.log(err)
-            this.msgError = err.error.message;
-            this.isLoading = false;
-          }
-        }
-        
-        );
-      }
-    }
-  
+  }
 
+  onSubmit(): void {
+    if (this.loginForm.invalid) return;
+
+    const credentials = this.loginForm.value;
+
+    this.authService.sendLoginForm(credentials).subscribe({
+      next: (response) => {
+        this.authService.setToken(response.token);
+        this.toastr.success('Login successful');
+        this.router.navigate(['/home']);
+      },
+      error: (err) => {
+        this.toastr.error(err.error.message || 'Login failed');
+      }
+    });
+  }
 }

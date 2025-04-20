@@ -1,154 +1,19 @@
-<h1 class="text-3xl text-center text-white bg-green-600 w-full font-semibold p-4 shadow-md">
-  Register
-</h1>
-
-<section class="w-full max-w-lg mx-auto mt-6 p-6 bg-white border rounded-xl shadow-lg">
-  <p class="text-2xl font-semibold text-gray-900 text-center">Create Your Account</p>
-  <p class="text-gray-500 text-center mb-6">Sign up to security upload prescriptions and receive AI</p>
-
-  <form [formGroup]="register" (ngSubmit)="submitForm()" class="space-y-4">
-    <!-- Name Field -->
-    <div>
-      @let nameControl = register.get('name');
-      <label for="name" class="block text-gray-700 font-medium mb-1">Name</label>
-      <div class="relative">
-        <i class="fa-solid fa-user absolute left-3 top-3 text-gray-500"></i>
-        <input type="text" id="name" formControlName="name" 
-          class="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 focus:outline-none"
-          placeholder="Enter your name">
-          @if (nameControl?.errors && nameControl?.touched) {
-            <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                <svg class="shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                </svg>
-                <span class="sr-only">Danger</span>
-                <div>
-                    <ul class="mt-1.5 list-disc list-inside">
-                      @if (nameControl?.getError('required')) {
-                          <li>name is requierd</li>
-                      }
-                        @if (nameControl?.getError('minlength')) {
-                            <li>name is minLength: 3</li>
-                        }
-                        @if (nameControl?.getError('maxlength')) {
-                            <li>name is maxLength: 20</li>
-                        }
-                  </ul>
-                </div>
-              </div>
-        }
-      </div>
-    </div>
-
-    <!-- Email Field -->
-    <div>
-      <label for="email" class="block text-gray-700 font-medium mb-1">Email</label>
-      <div class="relative">
-        <i class="fa-solid fa-envelope absolute left-3 top-3 text-gray-500"></i>
-        <input type="email" id="email" formControlName="email"
-          class="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 focus:outline-none"
-          placeholder="Enter your email">
-          @if (register.get('email')?.errors && register.get('email')?.touched) {
-            <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                <svg class="shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                </svg>
-                <span class="sr-only">Danger</span>
-                <div>
-                    <ul class="mt-1.5 list-disc list-inside">
-                      @if (register.get('email')?.getError('required')) {
-                          <li>email is requierd</li>
-                      }
-                        @else if (register.get('email')?.getError('minlength')) {
-                            <li>email is minLength: 3</li>
-                        }
-                        @else if (register.get('email')?.getError('maxlength')) {
-                            <li>email is maxLength: 20</li>
-                        }
-                  </ul>
-                </div>
-              </div>
-        }
-      </div>
-    </div>
-
-    <!-- Password Field -->
-    <div>
-      <label for="password" class="block text-gray-700 font-medium mb-1">Password</label>
-      <div class="relative">
-        <i class="fa-solid fa-lock absolute left-3 top-3 text-gray-500"></i>
-        <input type="password" id="password" formControlName="password"
-          class="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 focus:outline-none"
-          placeholder="Enter your password">
-          @if (register.get('password')?.errors && register.get('password')?.touched) {
-            <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                <svg class="shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                </svg>
-                <span class="sr-only">Danger</span>
-                <div>
-                    <ul class="mt-1.5 list-disc list-inside">
-                      @if (register.get('password')?.getError('required')) {
-                          <li>password is requierd</li>
-                      }
-                        @if (register.get('password')?.getError('minlength')) {
-                            <li>password is minLength: 7</li>
-                        }
-                        @if (register.get('password')?.getError('maxlength')) {
-                            <li>password is maxLength: 20</li>
-                        }
-                        @if (register.get('password')?.getError('pattern')) {
-                            <li>password must contain at least one uppercase letter, one lowercase letter, one number, and one special character</li>
-                      }
-                  </ul>
-                </div>
-              </div>
-        }
-      </div>
-    </div>
-
-    <!-- Confirm Password Field -->
-    <div>
-      <label for="confirmpassword" class="block text-gray-700 font-medium mb-1">Confirm Password</label>
-      <div class="relative">
-        <i class="fa-solid fa-lock absolute left-3 top-3 text-gray-500"></i>
-        <input type="password" id="confirmpassword" formControlName="rePassword"
-          class="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 focus:outline-none"
-          placeholder="Confirm your password">
-          @if (register.get('repassword')?.errors && register.get('repassword')?.touched) {
-            <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                <svg class="shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                </svg>
-                <span class="sr-only">Danger</span>
-                <div>
-                    <ul class="mt-1.5 list-disc list-inside">
-                      @if (register.get('rePassword')?.getError('required')) {
-                          <li>password confirmpassword is not correct</li>
-                      }
-                  </ul>
-                </div>
-              </div>
-        }
-      </div>
-    </div>
-
-    <!-- Submit Button -->
-    <button [disabled]="isLoading" type="submit"
-      class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-lg transition duration-200">
-      Sign Up
-      @if (isLoading) {
-        <i class="fas fa-spin fa-spinner ml-2"></i>
-      }
-    </button>
-
-    <!-- Error Message -->
-    @if (msgError) {
-      <p class="bg-red-500 text-white text-center p-2 rounded-lg mt-3">{{msgError}}</p>
-    }
-  </form>
-
-  <p class="text-center mt-4 text-gray-700">Already have an account?
-    <a routerLink="/login" class="text-blue-500 hover:underline">Log in</a>
-  </p>
-</section>
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+  <div class="mb-4">
+    <label class="block text-gray-700">Full Name</label>
+    <input type="text" formControlName="fullName" class="w-full p-2 border rounded mt-1">
+  </div>
+  <div class="mb-4">
+    <label class="block text-gray-700">Email</label>
+    <input type="email" formControlName="email" class="w-full p-2 border rounded mt-1">
+  </div>
+  <div class="mb-4">
+    <label class="block text-gray-700">Password</label>
+    <input type="password" formControlName="password" class="w-full p-2 border rounded mt-1">
+  </div>
+  <div class="mb-6">
+    <label class="block text-gray-700">Confirm Password</label>
+    <input type="password" formControlName="confirmPassword" class="w-full p-2 border rounded mt-1">
+  </div>
+  <button type="submit" [disabled]="!signupForm.valid" class="w-full bg-teal-600 text-white p-2 rounded hover:bg-teal-700">Register</button>
+</form>

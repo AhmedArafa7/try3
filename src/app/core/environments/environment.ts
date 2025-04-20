@@ -1,3 +1,3 @@
 export const environment = {
-    baseUrl : 'https://ecommerce.routemisr.com'
+    baseUrl : 'https://localhost:5001/api'
 }

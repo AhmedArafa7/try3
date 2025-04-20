@@ -1,78 +1,17 @@
-<h1 class="text-3xl text-center text-white bg-green-600 w-full font-semibold p-4 shadow-md ">
-  login now
-</h1>
-
-<section class="w-full max-w-lg mx-auto mt-6 p-6 bg-white border rounded-xl shadow-lg">
-  <p class="text-2xl font-semibold text-gray-900 text-center">Enter Your Account</p>
-  <p class="text-gray-500 text-center mb-6">login to Security</p>
-
-  <form [formGroup]="loginForm" (ngSubmit)="submitForm()" class="text-center">
-      
-    <div class="mb-6 relative">
-      <i class="fa-solid fa-envelope absolute left-3 top-3 text-gray-500"></i>
-        <input type="email" id="email" formControlName="email" placeholder="Email" class="pl-10 bg-white border w-full border-gray-300 to-gray-900 text-sm rounded-lg focus:ring-blue-500">
-        @if (loginForm.get('email')?.errors && loginForm.get('email')?.touched) {
-            <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                <svg class="shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                </svg>
-                <span class="sr-only">Danger</span>
-                <div>
-                    <ul class="mt-1.5 list-disc list-inside">
-                      @if (loginForm.get('email')?.getError('required')) {
-                          <li>email is requierd</li>
-                      }
-                        @else if (loginForm.get('email')?.getError('minlength')) {
-                            <li>email is minLength: 3</li>
-                        }
-                        @else if (loginForm.get('email')?.getError('maxlength')) {
-                            <li>email is maxLength: 20</li>
-                        }
-                  </ul>
-                </div>
-              </div>
-        }
-    </div>
-    <div class="mb-6 relative">
-      <i class="fa-solid fa-lock absolute left-3 top-3 text-gray-500"></i>
-        <input type="text" id="password" formControlName="password" placeholder="Password" class="pl-10 bg-white border w-full border-gray-300 to-gray-900 text-sm rounded-lg focus:ring-blue-500">
-        @if (loginForm.get('password')?.errors && loginForm.get('password')?.touched) {
-            <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                <svg class="shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                </svg>
-                <span class="sr-only">Danger</span>
-                <div>
-                    <ul class="mt-1.5 list-disc list-inside">
-                      @if (loginForm.get('password')?.getError('required')) {
-                          <li>password is requierd</li>
-                      }
-                        @if (loginForm.get('password')?.getError('minlength')) {
-                            <li>password is minLength: 3</li>
-                        }
-                        @if (loginForm.get('password')?.getError('maxlength')) {
-                            <li>password is maxLength: 20</li>
-                        }
-                  </ul>
-                </div>
-              </div>
-        }
-    </div>
-    <button [disabled]="isLoading" class="btn-main ml-3">LogIn
-      @if (isLoading) {
-        <i class="fas fa-spin fa-spinner"></i>
-      }
-    </button>
-    @if (msgError) {
-      <p class="bg-red-400 text-white px-2 py-4 border"> {{msgError}} </p>
-    }
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+  <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+    <h2 class="text-2xl font-bold text-center mb-4">Login</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="mb-4">
+        <label class="block text-gray-700">Email</label>
+        <input type="email" formControlName="email" class="w-full p-2 border rounded mt-1">
+      </div>
+      <div class="mb-6">
+        <label class="block text-gray-700">Password</label>
+        <input type="password" formControlName="password" class="w-full p-2 border rounded mt-1">
+      </div>
+      <button type="submit" [disabled]="loginForm.invalid" class="w-full bg-teal-600 text-white p-2 rounded hover:bg-teal-700">Login</button>
     </form>
-  
-    <div class="flex flex-col items-center justify-center mt-4">
-      <p class="text-gray-500 mb-2">Or</p>
-      <a routerLink="/forget-password" role="button" class="mb-1">Forget my password!</a>
-      <a routerLink="/register" role="button">Don't have an account?</a>
-    </div>
-</section>
-
-
+    <p class="text-center mt-4">Don't have an account? <a routerLink="/signup" class="text-teal-600">Sign Up</a></p>
+  </div>
+</div>

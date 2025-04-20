@@ -1,4 +1,10 @@
-
-
-
-<router-outlet />
+<div class="flex">
+    <app-sidebar [isOpen]="isSidebarOpen"></app-sidebar>
+    <div class="flex-1">
+      <app-navbar (sidebarToggled)="toggleSidebar()"></app-navbar>
+      
+      <div class="p-6">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
