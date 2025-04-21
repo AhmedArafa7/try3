@@ -8,23 +8,49 @@
   <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
     <h2 class="text-3xl font-semibold text-center text-gray-800 mb-6">Welcome Back</h2>
     
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4">
+
       <!-- Email Field -->
-      <div class="relative mb-5">
-        <i class="fa-solid fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-        <input type="text" id="email" formControlName="email" 
-          class="pl-10 pr-4 py-3 w-full border border-gray-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:outline-none"
-          placeholder="Email Address">
+      <div>
+        <div class="relative">
+          <i class="fa-solid fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+          <input type="text" id="email" formControlName="email" 
+            class="pl-10 pr-4 py-3 w-full border border-gray-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:outline-none"
+            placeholder="Email Address">
+        </div>
+        @if (loginForm.get('email')?.errors && loginForm.get('email')?.touched) {
+          <div class="text-left text-sm text-red-600 bg-red-100 p-3 rounded-md mt-2">
+            <ul class="list-disc pl-5">
+              @if (loginForm.get('email')?.getError('required')) { <li>Email is required</li> }
+              @if (loginForm.get('email')?.getError('email')) { <li>a valid format like: <strong>name&#64;gmail.com</strong></li>}
+              
+            </ul>
+          </div>
+        }
       </div>
-      
+
       <!-- Password Field -->
-      <div class="relative mb-6">
-        <i class="fa-solid fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-        <input type="password" id="password" formControlName="password" 
-          class="pl-10 pr-4 py-3 w-full border border-gray-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:outline-none"
-          placeholder="Password">
+      <div>
+        <div class="relative">
+          <i class="fa-solid fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+          <input type="password" id="password" formControlName="password" 
+            class="pl-10 pr-4 py-3 w-full border border-gray-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:outline-none"
+            placeholder="Password">
+        </div>
+        @if (loginForm.get('password')?.errors && loginForm.get('password')?.touched) {
+          <div class="text-left text-sm text-red-600 bg-red-100 p-3 rounded-md mt-2">
+            <ul class="list-disc pl-5">
+              @if (loginForm.get('password')?.getError('required')) { <li>Password is required</li> }
+              @if (loginForm.get('password')?.getError('minlength')) { <li>Password must be at least 6 characters</li> }
+              @if (loginForm.get('password')?.getError('maxlength')) { <li>Password must be at most 20 characters</li> }
+              @if (loginForm.get('password')?.getError('pattern')) { 
+                <li>Password must contain letters and numbers only</li> 
+              }
+            </ul>
+          </div>
+        }
       </div>
-      
+
       <!-- Submit Button -->
       <button type="submit" [disabled]="loginForm.invalid" 
         class="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 rounded-xl transition duration-200">
@@ -40,9 +66,6 @@
       <p>
         Don't have an account? 
         <a routerLink="/register" class="text-teal-600 hover:underline">Sign Up</a>
-      </p>
-      <p>
-        <a routerLink="/home" class="text-teal-600 hover:underline">Go to Homepage</a>
       </p>
     </div>
   </div>

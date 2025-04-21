@@ -8,41 +8,84 @@
   <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
     <h2 class="text-3xl font-semibold text-center text-gray-800 mb-6">Create an Account</h2>
 
-    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-      <!-- Full Name -->
-      <div class="relative mb-5">
-        <i class="fa-solid fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-        <input type="text" id="fullName" formControlName="fullName"
-          class="pl-10 pr-4 py-3 w-full border border-gray-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:outline-none"
-          placeholder="Full Name">
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="space-y-4">
+
+      <!-- Full Name Field -->
+      <div>
+        <div class="relative">
+          <i class="fa-solid fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+          <input type="text" id="fullName" formControlName="fullName"
+            class="pl-10 pr-4 py-3 w-full border border-gray-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:outline-none"
+            placeholder="Full Name">
+        </div>
+        @if (signupForm.get('fullName')?.errors && signupForm.get('fullName')?.touched) {
+          <div class="text-left text-sm text-red-600 bg-red-100 p-3 rounded-md mt-2">
+            <ul class="list-disc pl-5">
+              @if (signupForm.get('fullName')?.getError('required')) { <li>Full name is required</li> }
+            </ul>
+          </div>
+        }
       </div>
 
-      <!-- Email -->
-      <div class="relative mb-5">
-        <i class="fa-solid fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-        <input type="email" id="email" formControlName="email"
-          class="pl-10 pr-4 py-3 w-full border border-gray-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:outline-none"
-          placeholder="Email Address">
+      <!-- Email Field -->
+      <div>
+        <div class="relative">
+          <i class="fa-solid fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+          <input type="email" id="email" formControlName="email"
+            class="pl-10 pr-4 py-3 w-full border border-gray-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:outline-none"
+            placeholder="Email Address">
+        </div>
+        @if (signupForm.get('email')?.errors && signupForm.get('email')?.touched) {
+          <div class="text-left text-sm text-red-600 bg-red-100 p-3 rounded-md mt-2">
+            <ul class="list-disc pl-5">
+              @if (signupForm.get('email')?.getError('required')) { <li>Email is required</li> }
+              @if (signupForm.get('email')?.getError('email')) {<li>a valid format like: <strong>name&#64;gmail.com</strong></li> }
+            </ul>
+          </div>
+        }
       </div>
 
-      <!-- Password -->
-      <div class="relative mb-5">
-        <i class="fa-solid fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-        <input type="password" id="password" formControlName="password"
-          class="pl-10 pr-4 py-3 w-full border border-gray-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:outline-none"
-          placeholder="Password">
+      <!-- Password Field -->
+      <div>
+        <div class="relative">
+          <i class="fa-solid fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+          <input type="password" id="password" formControlName="password"
+            class="pl-10 pr-4 py-3 w-full border border-gray-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:outline-none"
+            placeholder="Password">
+        </div>
+        @if (signupForm.get('password')?.errors && signupForm.get('password')?.touched) {
+          <div class="text-left text-sm text-red-600 bg-red-100 p-3 rounded-md mt-2">
+            <ul class="list-disc pl-5">
+              @if (signupForm.get('password')?.getError('required')) { <li>Password is required</li> }
+              @if (signupForm.get('password')?.getError('minlength')) { <li>Password must be at least 6 characters</li> }
+            </ul>
+          </div>
+        }
       </div>
 
-      <!-- Confirm Password -->
-      <div class="relative mb-6">
-        <i class="fa-solid fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-        <input type="password" id="confirmPassword" formControlName="confirmPassword"
-          class="pl-10 pr-4 py-3 w-full border border-gray-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:outline-none"
-          placeholder="Confirm Password">
+      <!-- Confirm Password Field -->
+      <div>
+        <div class="relative">
+          <i class="fa-solid fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+          <input type="password" id="confirmPassword" formControlName="confirmPassword"
+            class="pl-10 pr-4 py-3 w-full border border-gray-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:outline-none"
+            placeholder="Confirm Password">
+        </div>
+        @if (signupForm.get('confirmPassword')?.errors && signupForm.get('confirmPassword')?.touched) {
+          <div class="text-left text-sm text-red-600 bg-red-100 p-3 rounded-md mt-2">
+            <ul class="list-disc pl-5">
+              @if (signupForm.get('confirmPassword')?.getError('required')) { <li>Confirm password is required</li> }
+              @if (
+                signupForm.get('confirmPassword')?.value !== signupForm.get('password')?.value &&
+                signupForm.get('confirmPassword')?.touched
+              ) { <li>Passwords do not match</li> }
+            </ul>
+          </div>
+        }
       </div>
 
       <!-- Submit Button -->
-      <button type="submit" [disabled]="!signupForm.valid"
+      <button type="submit" [disabled]="signupForm.invalid"
         class="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 rounded-xl transition duration-200">
         Register
       </button>

@@ -1,6 +1,7 @@
-import { AuthService } from './../../core/services/auth/auth.service';
+// login.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from './../../core/services/auth/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -24,7 +25,12 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      password: ['', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(20),
+        Validators.pattern(/^[a-zA-Z0-9]+$/)
+      ]]
     });
   }
 
