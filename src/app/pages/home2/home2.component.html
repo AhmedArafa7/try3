@@ -1,0 +1,14 @@
+<div class="max-w-2xl mx-auto">
+    <h2 class="text-2xl font-bold mb-4">Welcome, {{ user?.fullName || 'User' }}</h2>
+    <p class="text-gray-600 mb-6">Did you know? Our AI can identify over 1000 medications with 99% accuracy!</p>
+    <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+      <h3 class="text-lg font-semibold mb-4">Upload a Prescription Image</h3>
+      <p class="text-gray-600 mb-4">Select an image from your gallery or capture a new one</p>
+      <div class="flex justify-center space-x-4">
+        <button (click)="cameraInput.click()" class="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">Camera</button>
+        <button (click)="galleryInput.click()" class="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">Gallery</button>
+      </div>
+      <input type="file" #cameraInput accept="image/*" capture="environment" (change)="onFileSelected($event)" class="hidden">
+      <input type="file" #galleryInput accept="image/*" (change)="onFileSelected($event)" class="hidden">
+    </div>
+  </div>

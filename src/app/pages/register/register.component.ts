@@ -2,13 +2,13 @@ import { AuthService } from './../../core/services/auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   standalone: true,
-  imports: [ReactiveFormsModule], // تأكد من استيرادها
+  imports: [ReactiveFormsModule, RouterLink], // تأكد من استيرادها
 })
 export class RegisterComponent implements OnInit {
   signupForm!: FormGroup;
@@ -45,7 +45,7 @@ export class RegisterComponent implements OnInit {
       next: (response) => {
         this.authService.setToken(response.token);
         this.toastr.success('Registration successful');
-        this.router.navigate(['/home']);
+        this.router.navigate(['/home2']);
       },
       error: (err) => {
         this.toastr.error(err.error.message || 'Registration failed');

@@ -2,14 +2,14 @@ import { AuthService } from './../../core/services/auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule]
+  imports: [ReactiveFormsModule, CommonModule, RouterLink]
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
       next: (response) => {
         this.authService.setToken(response.token);
         this.toastr.success('Login successful');
-        this.router.navigate(['/home']);
+        this.router.navigate(['/home2']);
       },
       error: (err) => {
         this.toastr.error(err.error.message || 'Login failed');

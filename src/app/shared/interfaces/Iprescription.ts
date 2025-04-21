@@ -1,4 +1,4 @@
-export interface Prescription {
+export interface IPrescription {
     id: number;
     imageUrl: string;
     analysisResult?: string;

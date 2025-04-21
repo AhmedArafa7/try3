@@ -60,7 +60,7 @@ export class ForgetPasswordComponent {
         localStorage.setItem('token', res.token);
 
         this.authService.getUserData();
-        this.router.navigate(['/home']);
+        this.router.navigate(['/home2']);
         if(res.status === 'Success') {
           this.step = 3;
         }

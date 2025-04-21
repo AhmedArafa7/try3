@@ -1,7 +1,7 @@
 import { PrescriptionService } from './../../core/services/prescription/prescription.service';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { Prescription } from '../../shared/interfaces/Iprescription';
+import { IPrescription } from '../../shared/interfaces/Iprescription';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './uploads.component.html',
 })
 export class UploadsComponent implements OnInit {
-  prescriptions: Prescription[] = [];
+  prescriptions: IPrescription[] = [];
 
   constructor(
     private prescriptionService: PrescriptionService,

@@ -7,22 +7,23 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-home2',
   imports: [],
-  templateUrl: './home.component.html'
+  templateUrl: './home2.component.html',
+  styleUrls: ['./home2.component.scss']
 })
-export class HomeComponent {
+export class Home2Component {
   private readonly authService = inject(AuthService);
   private readonly imagesService = inject(ImagesService);
   private readonly prescriptionService = inject(PrescriptionService);
   private readonly toastr = inject(ToastrService);
-  private readonly router = inject(Router);
-  images: IPrescription[] = [] as IPrescription[]; 
+  images: IPrescription[] = [] as IPrescription[];
   show: boolean = false;
-  userName: string = this.authService.getUserData().name;
   user: any;
 
-  constructor() {}
+  constructor(
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.user = this.authService.getUserData();
@@ -58,13 +59,3 @@ export class HomeComponent {
       this.show = false;
   }
   }
-
-  
-
-  
-
-
-
-
-
-

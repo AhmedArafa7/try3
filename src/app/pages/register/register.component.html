@@ -1,19 +1,26 @@
-<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-  <div class="mb-4">
-    <label class="block text-gray-700">Full Name</label>
-    <input type="text" formControlName="fullName" class="w-full p-2 border rounded mt-1">
+<div class="text-3xl text-center text-white bg-teal-600 w-full font-semibold p-4 shadow-md ">Register </div>
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+  <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+    <h2 class="text-2xl font-bold text-center mb-4">Register </h2>
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <div class="mb-4">
+        <label class="block text-gray-700">Full Name</label>
+        <input type="text" formControlName="fullName" class="w-full p-2 border rounded mt-1">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700">Email</label>
+        <input type="email" formControlName="email" class="w-full p-2 border rounded mt-1">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700">Password</label>
+        <input type="password" formControlName="password" class="w-full p-2 border rounded mt-1">
+      </div>
+      <div class="mb-6">
+        <label class="block text-gray-700">Confirm Password</label>
+        <input type="password" formControlName="confirmPassword" class="w-full p-2 border rounded mt-1">
+      </div>
+      <button type="submit" [disabled]="!signupForm.valid" class="w-full bg-teal-600 text-white p-2 rounded hover:bg-teal-700">Register</button>
+      <p class="text-center mt-4">go back to <a routerLink="/login" class="text-teal-600">login</a></p>
+    </form>
   </div>
-  <div class="mb-4">
-    <label class="block text-gray-700">Email</label>
-    <input type="email" formControlName="email" class="w-full p-2 border rounded mt-1">
-  </div>
-  <div class="mb-4">
-    <label class="block text-gray-700">Password</label>
-    <input type="password" formControlName="password" class="w-full p-2 border rounded mt-1">
-  </div>
-  <div class="mb-6">
-    <label class="block text-gray-700">Confirm Password</label>
-    <input type="password" formControlName="confirmPassword" class="w-full p-2 border rounded mt-1">
-  </div>
-  <button type="submit" [disabled]="!signupForm.valid" class="w-full bg-teal-600 text-white p-2 rounded hover:bg-teal-700">Register</button>
-</form>
+</div>

@@ -1,17 +1,18 @@
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { Inject, inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import {jwtDecode} from 'jwt-decode';
 import { ToastrService } from 'ngx-toastr';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private httpClient:HttpClient,private toastr: ToastrService) { }
+  constructor(private httpClient:HttpClient,private toastr: ToastrService,@Inject(PLATFORM_ID) private platformId: any) { }
 
   private readonly router = inject(Router);
   private readonly toastrService = inject(ToastrService);
@@ -58,11 +59,16 @@ export class AuthService {
   }
 
   setToken(token: string): void {
+    if (isPlatformBrowser(this.platformId)) {
     localStorage.setItem('token', token);
+    }
   }
 
   getToken(): string | null {
+    if (isPlatformBrowser(this.platformId)) {
     return localStorage.getItem('token');
+  }
+  return null;
   }
 
   isLoggedIn(): boolean {

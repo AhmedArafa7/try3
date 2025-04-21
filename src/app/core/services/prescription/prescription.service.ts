@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Prescription } from '../../../shared/interfaces/Iprescription';
+import { IPrescription } from '../../../shared/interfaces/Iprescription';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +18,8 @@ export class PrescriptionService {
     return this.http.post(`${this.apiUrl}/upload`, formData);
   }
 
-  getPrescriptions(): Observable<Prescription[]> {
-    return this.http.get<Prescription[]>(this.apiUrl);
+  getPrescriptions(): Observable<IPrescription[]> {
+    return this.http.get<IPrescription[]>(this.apiUrl);
   }
 
   deletePrescription(id: number): Observable<void> {

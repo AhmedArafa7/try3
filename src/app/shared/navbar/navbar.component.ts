@@ -6,13 +6,10 @@ import { Component, Output, EventEmitter } from '@angular/core';
   templateUrl: './navbar.component.html'
 })
 export class NavbarComponent {
-  @Output() sidebarToggled = new EventEmitter<void>();
 
   constructor(private authService: AuthService) {}
 
-  toggleSidebar(): void {
-    this.sidebarToggled.emit();
-  }
+
 
   logout(): void {
     this.authService.logout();
