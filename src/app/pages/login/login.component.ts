@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
       next: (response) => {
         this.authService.setToken(response.token);
         this.toastr.success('Login successful');
-        this.router.navigate(['/home2']);
+        this.router.navigate(['/home']);
       },
       error: (err) => {
         this.toastr.error(err.error.message || 'Login failed');

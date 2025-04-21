@@ -1,5 +1,5 @@
-import { AuthService } from './../../core/services/auth/auth.service';
-import { PrescriptionService } from './../../core/services/prescription/prescription.service';
+import { AuthService } from '../../core/services/auth/auth.service';
+import { PrescriptionService } from '../../core/services/prescription/prescription.service';
 import { Component, inject } from '@angular/core';
 import { ImagesService } from '../../core/services/images/images.service';
 import { IPrescription } from '../../shared/interfaces/Iprescription';
@@ -9,20 +9,21 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   imports: [],
-  templateUrl: './home.component.html'
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
   private readonly authService = inject(AuthService);
   private readonly imagesService = inject(ImagesService);
   private readonly prescriptionService = inject(PrescriptionService);
   private readonly toastr = inject(ToastrService);
-  private readonly router = inject(Router);
-  images: IPrescription[] = [] as IPrescription[]; 
+  images: IPrescription[] = [] as IPrescription[];
   show: boolean = false;
-  userName: string = this.authService.getUserData().name;
   user: any;
 
-  constructor() {}
+  constructor(
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.user = this.authService.getUserData();
@@ -58,13 +59,3 @@ export class HomeComponent {
       this.show = false;
   }
   }
-
-  
-
-  
-
-
-
-
-
-

@@ -45,7 +45,7 @@ export class RegisterComponent implements OnInit {
       next: (response) => {
         this.authService.setToken(response.token);
         this.toastr.success('Registration successful');
-        this.router.navigate(['/home2']);
+        this.router.navigate(['/home']);
       },
       error: (err) => {
         this.toastr.error(err.error.message || 'Registration failed');

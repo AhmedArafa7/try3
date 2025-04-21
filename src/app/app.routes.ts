@@ -19,7 +19,7 @@ export const routes: Routes = [
         path: '', 
         component: BlanklayoutComponent,
         children: [
-            { path: 'home2', loadComponent: () => import('./pages/home2/home2.component').then(m => m.Home2Component) },
+            { path: 'home', loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent) },
             { path: 'uploads', loadComponent: () => import('./pages/uploads/uploads.component').then(m => m.UploadsComponent) },
             { path: 'settings', loadComponent: () => import('./pages/settings/settings.component').then(m => m.SettingsComponent) },
         ]},
