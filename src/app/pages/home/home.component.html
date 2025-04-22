@@ -15,12 +15,15 @@
     </p>
 
     <div class="flex justify-center gap-4">
-      <button
-        (click)="cameraInput.click()"
-        class="bg-teal-600 hover:bg-teal-700 text-white font-medium px-5 py-2.5 rounded-lg transition duration-200 shadow-sm"
-      >
-        Camera
-      </button>
+      @if (isMobile) {
+        <button
+          (click)="cameraInput.click()"
+          class="bg-teal-600 hover:bg-teal-700 text-white font-medium px-5 py-2.5 rounded-lg transition duration-200 shadow-sm"
+        >
+          Camera
+        </button>
+      }
+      
       <button
         (click)="galleryInput.click()"
         class="bg-teal-600 hover:bg-teal-700 text-white font-medium px-5 py-2.5 rounded-lg transition duration-200 shadow-sm"

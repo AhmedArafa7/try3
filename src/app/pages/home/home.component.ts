@@ -20,6 +20,7 @@ export class HomeComponent {
   images: IPrescription[] = [] as IPrescription[];
   show: boolean = false;
   user: any;
+  isMobile: boolean = false;
 
   constructor(
     private router: Router
@@ -27,35 +28,43 @@ export class HomeComponent {
 
   ngOnInit(): void {
     this.user = this.authService.getUserData();
+    this.isMobile = this.detectMobileDevice();
   }
 
-  getPrescriptionsData():void {
+  detectMobileDevice(): boolean {
+    // الكشف إذا كان الجهاز موبايل أو لاب توب
+    const userAgent = navigator.userAgent.toLowerCase();
+    return /android|iphone|ipad|ipod|windows phone/i.test(userAgent);
+  }
+
+  getPrescriptionsData(): void {
     this.imagesService.getAllPriscriptions().subscribe({
-      next:(res)=>{
+      next: (res) => {
         this.images = res.data;
       },
-      error:(err)=>{
+      error: (err) => {
         console.log(err);
       }
-    });}
-  
+    });
+  }
 
-    onFileSelected(event: any): void {
-      const file: File = event.target.files[0];
-      if (file) {
-        this.prescriptionService.uploadPrescription(file).subscribe({
-          next: () => {
-            this.toastr.success('Prescription uploaded successfully');
-            this.show = true;
-            this.router.navigate(['/uploads']);
-          },
-          error: (err) => {
-            this.toastr.error(err.error.message || 'Upload failed');
-          }
-        });
-      }
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.prescriptionService.uploadPrescription(file).subscribe({
+        next: () => {
+          this.toastr.success('Prescription uploaded successfully');
+          this.show = true;
+          this.router.navigate(['/uploads']);
+        },
+        error: (err) => {
+          this.toastr.error(err.error.message || 'Upload failed');
+        }
+      });
     }
-    hide() {
-      this.show = false;
   }
+
+  hide() {
+    this.show = false;
   }
+}
